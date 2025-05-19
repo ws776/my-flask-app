@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 genai.configure(api_key=os.getenv("GENAI_API_KEY"))
-gemini_model = genai.GenerativeModel(model_name='models/gemini-1.5-pro')
+gemini_model = genai.GenerativeModel(model_name='models/gemini-1.5-flash')
 
 @app.route('/echo', methods=['POST'])
 def upload():
