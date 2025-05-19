@@ -12,7 +12,7 @@ def upload():
     message = data.get("message", "")
     
     chat = gemini_model.start_chat()
-    response = chat.send_message(message + " (友達のように接して)")
+    response = chat.send_message(message + "(友達のように接して,メッセージはなるべく短く！)")
     response_text = response.text.replace("*", ",")
     
     return jsonify({"response": response_text})
