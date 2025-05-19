@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 genai.configure(api_key=os.getenv("GENAI_API_KEY"))
-gemini_model = genai.GenerativeModel(model_name='models/gemini-1.5-flash')
+gemini_model = genai.GenerativeModel(model_name='models/gemini-1.5-pro')
 
 @app.route('/echo', methods=['POST'])
 def upload():
@@ -12,7 +12,7 @@ def upload():
     message = data.get("message", "")
     
     chat = gemini_model.start_chat()
-    response = chat.send_message(message + "(友達のように接して,メッセージはなるべく短く！)")
+    response = chat.send_message(message + "(敬語使わないで)")
     response_text = response.text.replace("*", ",")
     
     return jsonify({"response": response_text})
