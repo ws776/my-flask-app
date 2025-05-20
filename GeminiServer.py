@@ -23,7 +23,6 @@ def echo():
         return jsonify({"error": "session_id is required"}), 400
 
     if session_id not in chat_sessions:
-        # dequeを初期化
         chat_sessions[session_id] = deque(maxlen=MAX_HISTORY)
 
     history = chat_sessions[session_id]
@@ -31,24 +30,15 @@ def echo():
     # ユーザー発言を履歴に追加
     history.append({"author": "user", "content": message})
 
-    # Geminiのチャット開始
+    # チャットセッションを開始
     chat = gemini_model.start_chat()
 
-    # 過去の会話履歴をチャットに反映（順番にメッセージ送信）
-    for turn in history:
-        if turn["author"] == "user":
-            chat.send_message(turn["content"])
-        else:
-            chat.append_response(turn["content"])
-
-    # 今回のメッセージ（敬語抜き指示を追加）で応答生成
+    # 今回のメッセージだけ送信（履歴はAPI側で管理されているので渡さない）
     response = chat.send_message(message + "(敬語使わないで)")
+
     response_text = response.text.replace("*", ",")
 
     # AI応答も履歴に追加
     history.append({"author": "ai", "content": response_text})
 
     return jsonify({"response": response_text, "session_id": session_id})
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
