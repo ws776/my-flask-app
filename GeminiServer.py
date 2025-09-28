@@ -6,7 +6,7 @@ app = Flask(__name__)
 genai.configure(api_key=os.getenv("GENAI_API_KEY"))
 
 # モデルを単発応答に変更（まずは動作確認優先）
-gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash-latest")
+gemini_model = genai.GenerativeModel("gemini-1.5-flash")
 
 @app.route('/echo', methods=['POST'])
 def upload():
