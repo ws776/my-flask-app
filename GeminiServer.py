@@ -5,11 +5,8 @@ import os
 app = Flask(__name__)
 genai.configure(api_key=os.getenv("GENAI_API_KEY"))
 
-# 正しいモデル名に修正
+# モデルを単発応答に変更（まずは動作確認優先）
 gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash-latest")
-
-# グローバルなチャットセッション
-chat = gemini_model.start_chat()
 
 @app.route('/echo', methods=['POST'])
 def upload():
@@ -17,10 +14,11 @@ def upload():
         data = request.get_json()
         message = data.get("message", "")
 
-        response = chat.send_message(message + "(敬語使わないで)")
+        # まずは generate_content で動作確認
+        response = gemini_model.generate_content(message + "(敬語使わないで)")
         response_text = response.text.replace("*", ",") if response.text else ""
 
         return jsonify({"response": response_text})
     except Exception as e:
-        # エラー内容を返す（開発用）
+        # エラー内容をそのまま返す
         return jsonify({"error": str(e)}), 500
