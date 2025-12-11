@@ -8,12 +8,12 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 # APIキーの設定（ログで確認）
-API_KEY = os.getenv("GENAI_API_KEY")
-app.logger.debug(f"GENAI_API_KEY present: {bool(API_KEY)}")
+API_KEY = os.getenv("GEMINI_API_KEY")
+app.logger.debug(f"GEMINI_API_KEY present: {bool(API_KEY)}")
 if API_KEY:
     genai.configure(api_key=API_KEY)
 else:
-    app.logger.warning("GENAI_API_KEY is not set. Requests will likely fail.")
+    app.logger.warning("GEMINI_API_KEY is not set. Requests will likely fail.")
 
 # モデルインスタンスは作っておく（start_chat は各リクエストで作る）
 try:
