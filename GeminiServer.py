@@ -11,14 +11,14 @@ app = Flask(__name__)
 # --- 1. サーバー起動時の設定とチェック ---
 
 # APIキーの設定 (環境変数名から取得)
-API_KEY = os.getenv("GENAI_API_KEY") 
-app.logger.debug(f"GENAI_API_KEY present: {bool(API_KEY)}")
+API_KEY = os.getenv("GEMINI_API_KEY") 
+app.logger.debug(f"GEMINI_API_KEY present: {bool(API_KEY)}")
 
 if API_KEY:
     genai.configure(api_key=API_KEY)
 else:
     # APIキーがない場合、警告を出す
-    app.logger.warning("GENAI_API_KEY is NOT set. API requests will likely fail with a 500 error.")
+    app.logger.warning("GEMINI_API_KEY is NOT set. API requests will likely fail with a 500 error.")
 
 # モデルインスタンスを作成
 try:
