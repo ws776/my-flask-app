@@ -22,7 +22,7 @@ else:
 
 # モデルインスタンスを作成
 try:
-    gemini_model = genai.GenerativeModel(model_name='gemini-2.0-flash')
+    gemini_model = genai.GenerativeModel(model_name='gemini-2.5-flash')
     app.logger.debug("GenerativeModel created successfully.")
 except Exception as e:
     app.logger.exception("Failed to create GenerativeModel at startup: %s", e)
